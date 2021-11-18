@@ -1,2 +1,4 @@
+.DS_Store
+*.DS_Store
 ./chisel-template/target
 ./chisel-template/.metals
