@@ -1,4 +1,10 @@
 .DS_Store
 *.DS_Store
-./chisel-template/target
-./chisel-template/.metals
+
+*.log
+
+./chisel-template/target/
+./chisel-template/.metals/
+./chisel-template/project/target/
+./chisel-template/test_run_dir/
+
