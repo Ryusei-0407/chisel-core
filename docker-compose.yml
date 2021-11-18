@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  riscv:
+    container_name: riscv-dev
+    image: yutaronishiyama/riscv-chisel-book
+    tty: true
+    volumes:
+      - .:/src
