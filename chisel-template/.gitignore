@@ -1,0 +1,10 @@
+.DS_Store
+*.DS_Store
+
+*.log
+
+target/
+.metals/
+project/
+test_run_dir/
+
