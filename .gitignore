@@ -5,6 +5,6 @@
 
 ./chisel-template/target/
 ./chisel-template/.metals/
-./chisel-template/project/target/
+./chisel-template/project/
 ./chisel-template/test_run_dir/
 
