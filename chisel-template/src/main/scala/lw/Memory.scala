@@ -1,4 +1,4 @@
-package decode
+package lw
 
 import chisel3._
 import chisel3.util._
@@ -30,13 +30,20 @@ class Memory extends Module {
   val mem = Mem(16384, UInt(8.W))
 
   // Road memory data
-  loadMemoryFromFile(mem, "src/hex/fetch.hex")
+  loadMemoryFromFile(mem, "src/hex/lw.hex")
 
   // 8bit * 4 = 32bit
   io.imem.inst := Cat(
     mem(io.imem.addr + 3.U(WORD_LEN.W)),
     mem(io.imem.addr + 2.U(WORD_LEN.W)),
     mem(io.imem.addr + 1.U(WORD_LEN.W)),
-    mem(io.imem.addr),
+    mem(io.imem.addr)
+  )
+
+  io.dmem.rdata := Cat(
+    mem(io.dmem.addr + 3.U(WORD_LEN.W)),
+    mem(io.dmem.addr + 2.U(WORD_LEN.W)),
+    mem(io.dmem.addr + 1.U(WORD_LEN.W)),
+    mem(io.dmem.addr)
   )
 }

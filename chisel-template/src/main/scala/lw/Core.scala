@@ -1,4 +1,4 @@
-package decode
+package lw
 
 import chisel3._
 import chisel3.util._
@@ -44,11 +44,40 @@ class Core extends Module {
   val rs1_data = Mux((rs1_addr =/= 0.U(WORD_LEN.U)), regfile(rs1_addr), 0.U(WORD_LEN.W))
   val rs2_data = Mux((rs2_addr =/= 0.U(WORD_LEN.U)), regfile(rs2_addr), 0.U(WORD_LEN.W))
 
+  // Sign extension of offset
+  val imm_i = inst(31, 20)
+  val imm_i_sext = Cat(Fill(20, imm_i(11)), imm_i)
+
+  /*
+   * Execute (EX) Stage
+   */
+
+  // Calculation of memory address
+  val alu_out = MuxCase(0.U(WORD_LEN.W), Seq(
+    (inst === LW) -> (rs1_data + imm_i_sext)
+  ))
+
+  /*
+   * Memory Access Stage
+   */
+
+  io.dmem.addr := alu_out
+
+  /*
+   * Write Back (WB) Stage
+   */
+
+  val wb_data = io.dmem.rdata
+  when(inst === LW) {
+    regfile(wb_addr) := wb_data
+  }
+
   /*
    * Debug
    */
-  // If exit signal is "34333231", then return true.B
-  io.exit := (inst === 0x34333231.U(WORD_LEN.W))
+
+  // If exit signal is "14131211", then return true.B
+  io.exit := (inst === 0x14131211.U(WORD_LEN.W))
   printf(p"rc_reg    :0x${Hexadecimal(pc_reg)}\n")
   printf(p"inst      :0x${Hexadecimal(inst)}\n")
   printf(p"rs1_addr  :$rs1_addr\n")
@@ -56,5 +85,7 @@ class Core extends Module {
   printf(p"wb_addr   :$wb_addr\n")
   printf(p"rs1_data  :0x${Hexadecimal(rs1_data)}\n")
   printf(p"rs2_data  :0x${Hexadecimal(rs2_data)}\n")
+  printf(p"wb_data   :0x${Hexadecimal(wb_data)}\n")
+  printf(p"dmem.addr :${io.dmem.addr}\n")
   printf("----------------------------------\n")
 }
