@@ -5,9 +5,9 @@ import chisel3._
 object Consts {
   val WORD_LEN      = 32
   val START_ADDR    = 0.U(WORD_LEN.W)
-  val BUBBLE        = 0x00000013.U(WORD_LEN.W)  // [ADDI x0,x0,0] = BUBBLE
-  val UNIMP         = "x_c0001073".U(WORD_LEN.W) // [CSRRW x0, cycle, x0]
-  val ADDR_LEN      = 5 // rs1,rs2,wb
+  val BUBBLE        = 0x00000013.U(WORD_LEN.W)
+  val UNIMP         = "x_c0001073".U(WORD_LEN.W)
+  val ADDR_LEN      = 5
   val CSR_ADDR_LEN  = 12
   val VLEN          = 128
   val LMUL_LEN      = 2
@@ -55,13 +55,13 @@ object Consts {
 
   val MEN_LEN = 2
   val MEN_X   = 0.U(MEN_LEN.W)
-  val MEN_S   = 1.U(MEN_LEN.W) // スカラ命令用
-  val MEN_V   = 2.U(MEN_LEN.W) // ベクトル命令用
+  val MEN_S   = 1.U(MEN_LEN.W)
+  val MEN_V   = 2.U(MEN_LEN.W)
 
   val REN_LEN = 2
   val REN_X   = 0.U(REN_LEN.W)
-  val REN_S   = 1.U(REN_LEN.W) // スカラ命令用
-  val REN_V   = 2.U(REN_LEN.W) // ベクトル命令用
+  val REN_S   = 1.U(REN_LEN.W)
+  val REN_V   = 2.U(REN_LEN.W)
 
   val WB_SEL_LEN = 3
   val WB_X       = 0.U(WB_SEL_LEN.W)
